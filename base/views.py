@@ -1,13 +1,9 @@
 from django.shortcuts import render
-
-rooms = [
-    {'id': 1, 'name': 'Lets learn Python'},
-    {'id': 2, 'name': 'Lets learn JS'},
-    {'id': 3, 'name': 'Lets learn C#'},
-]
+from .models import Room
 
 
 def home(request):
+    rooms = Room.objects.all()
     context = {
         'rooms': rooms
     }
@@ -15,9 +11,6 @@ def home(request):
 
 
 def room(request, pk):
-    room = None
-    for i in rooms:
-        if i['id'] == int(pk):
-            room = i
+    room = Room.objects.get(id=pk)
     context = {'room': room}
     return render(request, 'base/room.html', context)
